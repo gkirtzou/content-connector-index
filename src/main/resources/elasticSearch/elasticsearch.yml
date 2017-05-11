@@ -1,0 +1,15 @@
+##################### ElasticSearch Configuration #####################
+
+############################### Paths #################################
+# Path to directory where to store index data allocated for this node.
+#path.data: /var/lib/elasticsearch
+# Path to log files:
+#path.logs: /var/log/elasticsearch
+
+######################### Network And HTTP ############################
+#http.host: 0.0.0.0
+#transport.host: 127.0.0.1
+#transport.publish_port: 9200
+
+######################### Security Settings ###########################
+xpack.security.enabled: false
