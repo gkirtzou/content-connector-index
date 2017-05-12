@@ -1,22 +1,15 @@
 package eu.openminted.content.index;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
 
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 
-import com.google.gson.JsonObject;
 
-import eu.openminted.content.index.entities.Publication;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
-import io.searchbox.core.SearchResult.Hit;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
 import io.searchbox.indices.IndicesExists;
@@ -72,9 +65,9 @@ public class IndexHandler<T> {
 				.setParameter(Parameters.SIZE, 100)
 				.build();
 		
-		SearchResult resultSearch = client.execute(search);
-		//List<SearchResult.Hit<Publication, Void>> hits = resultSearch.getHits(Publication.class);
+		SearchResult resultSearch = client.execute(search);		
 		return resultSearch;
 	}
+	
 	
 }

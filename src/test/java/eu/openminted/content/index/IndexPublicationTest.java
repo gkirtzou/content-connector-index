@@ -4,30 +4,24 @@ package eu.openminted.content.index;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.google.gson.Gson;
-
 import eu.openminted.content.index.IndexConfiguration;
-import eu.openminted.content.index.IndexConnection;
-import eu.openminted.content.index.MyJestResultHandler;
 import eu.openminted.content.index.entities.Publication;
 import eu.openminted.content.index.entities.PublicationGenerator;
-import io.searchbox.client.JestClient;
-import io.searchbox.client.JestResult;
-import io.searchbox.core.Index;
-import io.searchbox.indices.CreateIndex;
-import io.searchbox.indices.mapping.PutMapping;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {IndexConfigTest.class})
@@ -39,75 +33,30 @@ public class IndexPublicationTest {
     private IndexConfiguration esConfig;
 	
 	@Autowired
-	private IndexConnection esConnection;
-	
-	@Autowired
 	private IndexPublication index;
-/*	
-	@Test
-	public void createIndex() throws Exception {
+	
+	
+	
+	
+	private void createIndex() throws Exception {
 		
-		String indexName = "test_index2";
-		log.info("TEST CREATE INDEX");
-		log.info("Creating index " + indexName);
-		JestResult result =  index.createIndex(indexName);
-		log.info("Response code " + result.getResponseCode() );
-		log.info("Succeded? " + result.isSucceeded());
-		assert(result.isSucceeded() == true);
+		log.info("Creating test index " + esConfig.getIndex());
+		boolean success =  index.createIndex();
+		log.info("Succeded? " + success);
+		assert(success == true);
 	}
 
-	@Test
-	@Ignore
-    public void deleteIndex() throws Exception {
+	public void deleteIndex() throws Exception {
 		
-		log.info("TEST DELETE INDEX");
-		log.info("Delete index " + esConfig.getIndex());
-		JestResult result = index.existsIndex();
-		if (result.isSucceeded()) {
-			result =  index.deleteIndex(esConfig.getIndex());
-			log.info("Response code " + result.getResponseCode() );
-			log.info("Succeded? " + result.isSucceeded());
-			assert(result.isSucceeded() == true);
-		}
-		else {
-			log.info("Index " + esConfig.getIndex() + " does not exist");
-			
-		}
+		log.info("Deleting test index " + esConfig.getIndex());
+		boolean success =  index.deleteIndex();
+		log.info("Succeded? " + success);
+		assert(success == true);		
 	}
 	
-	
-	@Test
-	@Ignore
-	public void addIndexMapping() {
-
-		
-		log.info("TEST ADD MAPPING TO INDEX");
-		
-		
-		String mapping =  "{ \" " + esConfig.getDocumentType() + " \" : { \"properties\" : { " +
-							" \"openaireId\" : {\"type\" : \"string\", \"store\" : \"yes\"}, " +
-							" \"hashValue\" : {\"type\" : \"string\", \"store\" : \"yes\"}, " +
-							" \"mimeType\" : {\"type\" : \"string\", \"store\" : \"yes\"}, " +
-							" \"pathToFile\" : {\"type\" : \"string\", \"store\" : \"yes\"} " +
-							" } } }";
-		PutMapping putMapping = new PutMapping.Builder(
-		        esConfig.getIndex(),
-		        esConfig.getDocumentType(),
-		        mapping
-		).build();
-		
-		log.info(putMapping.toString());
-		log.info(mapping);
-		JestResult result = client.execute(putMapping);
-		log.info("Result::" + result.getJsonString());	
-				
-	}
-	*/
-	
-	@Test	
-	public void addObjectsToIndex() throws Exception {
+	public void addPublicationsToIndex() throws Exception {
 			
-		log.info("TEST ADD OBJECT TO INDEX");
+		log.info("Adding objects to index");
 		String pathToPdf = "/home/gkirtzou/Desktop/tmp/pdfs/";
 		String urlDomain = "http://adonis.athenarc.gr/pdfs/";	
 		PublicationGenerator pubGenerator = new PublicationGenerator(pathToPdf, urlDomain, 9);
@@ -120,7 +69,7 @@ public class IndexPublicationTest {
 			log.info("Add publication :: " + doc.toString());
 			
 			// Add publication to Elastic Search
-			boolean success = index.addObject(doc, id); 
+			boolean success = index.addPublication(doc, id); 
 			log.info("Succeded? " + success);
 			assert(success == true);
 		}
@@ -128,33 +77,61 @@ public class IndexPublicationTest {
 	}
 	
 	
-	@Test
-	public void getObjectsFromIndex() throws Exception {
+	public void getPublicationsFromIndex() throws Exception {
 		
-		log.info("TEST GET OBJECT FROM INDEX");
-		for (int i = 0; i < 10; i++) {
+		log.info("Getting objects from index");
+		for (int i = 3; i < 5; i++) {
 			String id = Integer.toString(i);
 			log.info("Get Object " + id  + " of type " + esConfig.getDocumentType() + " from " + esConfig.getIndex());
-			Publication pub = (Publication) index.getObject(id);
+			Publication pub = (Publication) index.getPublication(id);
 			log.info("Publication " + pub.toString());
 		}
 	}
 		
+	public void containsPublication() throws IOException {
 		
-	@Test
-	public void containsObject() throws IOException {
-		
-		log.info("TEST CONTAINS OBJECT");
+		log.info("Contains objects");
 		String id = "1";
-		boolean contains = index.containsObject(id);
+		boolean contains = index.containsPublication(id);
 		log.info("Object " + id  + " should exist in " + esConfig.getIndex() + ". Contains? " + contains);
 		assert(contains == true);
 		
 		id = "10000";
-		contains = index.containsObject(id);
+		contains = index.containsPublication(id);
 		log.info("Object " + id  + " should not exist in " + esConfig.getIndex() + ". Contains? " + contains);
 		assert(contains == false);
 	
+	}
+	
+	@Test
+	public void basicIndexOperations() throws Exception {
+		log.info("BASIC INDEX OPERATIONS");
+		createIndex();
+		addPublicationsToIndex();
+		containsPublication();
+		getPublicationsFromIndex();
+		deleteIndex();
+	}
+	
+	@Test 
+	public void searchPublicationsByMimeType() throws Exception {
+		log.info("SEARCHING PUBLICATION BY MIMETYPE");
+		createIndex();
+		addPublicationsToIndex();
+		
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		log.info("Search Source builder completed");
+		searchSourceBuilder.query(QueryBuilders.matchQuery("mimeType", "pdf"));
+		String query = searchSourceBuilder.toString();
+		log.info("Testing query\n" + query);
+		
+		ArrayList<Publication> pubs = index.searchObjects(query);
+		assert(pubs != null);
+		Iterator<Publication> itPubs = pubs.iterator();
+		while (itPubs.hasNext()) {
+			log.info(itPubs.next().toString());
+		}		
+		deleteIndex();		
 	}
 	
 }
