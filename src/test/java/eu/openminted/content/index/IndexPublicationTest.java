@@ -43,7 +43,7 @@ public class IndexPublicationTest {
 		log.info("Creating test index " + esConfig.getIndex());
 		boolean success =  index.createIndex();
 		log.info("Succeded? " + success);
-		assert(success == true);
+		assert(success);
 	}
 
 	public void deleteIndex() throws Exception {
@@ -51,7 +51,7 @@ public class IndexPublicationTest {
 		log.info("Deleting test index " + esConfig.getIndex());
 		boolean success =  index.deleteIndex();
 		log.info("Succeded? " + success);
-		assert(success == true);		
+		assert(success);
 	}
 	
 	public void addPublicationsToIndex() throws Exception {
@@ -71,7 +71,7 @@ public class IndexPublicationTest {
 			// Add publication to Elastic Search
 			boolean success = index.addPublication(doc, id); 
 			log.info("Succeded? " + success);
-			assert(success == true);
+			assert(success);
 		}
 				
 	}
@@ -83,7 +83,7 @@ public class IndexPublicationTest {
 		for (int i = 3; i < 5; i++) {
 			String id = Integer.toString(i);
 			log.info("Get Object " + id  + " of type " + esConfig.getDocumentType() + " from " + esConfig.getIndex());
-			Publication pub = (Publication) index.getPublication(id);
+			Publication pub = index.getPublication(id);
 			log.info("Publication " + pub.toString());
 		}
 	}
@@ -94,16 +94,17 @@ public class IndexPublicationTest {
 		String id = "1";
 		boolean contains = index.containsPublication(id);
 		log.info("Object " + id  + " should exist in " + esConfig.getIndex() + ". Contains? " + contains);
-		assert(contains == true);
+		assert(contains);
 		
 		id = "10000";
 		contains = index.containsPublication(id);
 		log.info("Object " + id  + " should not exist in " + esConfig.getIndex() + ". Contains? " + contains);
-		assert(contains == false);
+		assert(!contains);
 	
 	}
 	
 	@Test
+	@Ignore
 	public void basicIndexOperations() throws Exception {
 		log.info("BASIC INDEX OPERATIONS");
 		createIndex();
@@ -113,7 +114,8 @@ public class IndexPublicationTest {
 		deleteIndex();
 	}
 	
-	@Test 
+	@Test
+	@Ignore
 	public void searchPublicationsByMimeType() throws Exception {
 		log.info("SEARCHING PUBLICATION BY MIMETYPE");
 		createIndex();
