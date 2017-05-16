@@ -3,19 +3,14 @@ package eu.openminted.content.index;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
-
-
 public class IndexConfiguration {
 
 	private static IndexConfiguration instance = null;
-	private static String host;
-	private static String port;
-	private static String index;
-	private static String documentType;
+	private String host;
+	private String port;
+	private String index;
+	private String documentType;
+	private String mapping;
 	
 	
 	/**
@@ -47,7 +42,7 @@ public class IndexConfiguration {
      */
     private void getPropValues() throws IOException, Exception {
 		Properties configFile = new Properties();
-		configFile.load(IndexConfiguration.class.getClassLoader().getResourceAsStream("elasticSearchConfig.properties"));
+		configFile.load(IndexConfiguration.class.getClassLoader().getResourceAsStream("indexConfig.properties"));
 				
 		host = configFile.getProperty("host");
 	    if (host != null) {
@@ -77,28 +72,58 @@ public class IndexConfiguration {
 		} else {
 	    	throw new Exception("documentType parameter does not exists");
 	    } 
+		
+		mapping = configFile.getProperty("mapping");
+		if ( mapping != null) {
+			mapping = mapping.trim();
+		}
+		
 	}
 
 
 	public String getHost() {
-		return host;
+		return this.host;
 	}
 
+	public void setHost(String host) {
+		this.host = host;
+	}
 
 	
 	public String getPort() {
-		return port;
+		return this.port;
 	}
 
+	public void setPort(String port) {
+		this.port = port;
+	}
 
+	
 	public String getIndex() {
-		return index;
+		return this.index;
 	}
 
+	public void setIndex(String index) {
+		this.index = index;
+	}
 
+	
 	public String getDocumentType() {
-		return documentType;
+		return this.documentType;
 	}
+	
+	public void setDocumentType(String documentType) {
+		this.documentType = documentType;
+	}
+
+	public String getMapping() {
+		return this.mapping;
+	}
+
+	public void setMapping(String mapping) {
+		this.mapping = mapping;
+	}
+
 
 
 

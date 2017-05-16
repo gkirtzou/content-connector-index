@@ -54,6 +54,14 @@ public class IndexPublicationTest {
 		assert(success);
 	}
 	
+	public void addMapping() throws Exception {
+		log.info("Add the following map \n" + esConfig.getMapping() + "\n to index " + esConfig.getIndex());
+		boolean success =  index.addMapping();
+		log.info("Succeded? " + success);
+		assert(success);
+		
+	}
+	
 	public void addPublicationsToIndex() throws Exception {
 			
 		log.info("Adding objects to index");
@@ -104,10 +112,11 @@ public class IndexPublicationTest {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void basicIndexOperations() throws Exception {
 		log.info("BASIC INDEX OPERATIONS");
 		createIndex();
+		addMapping();
 		addPublicationsToIndex();
 		containsPublication();
 		getPublicationsFromIndex();
