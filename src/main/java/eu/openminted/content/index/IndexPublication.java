@@ -28,17 +28,28 @@ public class IndexPublication {
 	
 	public boolean existsIndex() throws IOException {
 		JestResult result = this.index.existsIndex(this.indexConfig.getIndex());
-		return result.isSucceeded();
+		return result.isSucceeded();	
 	}
+	
 	
 	public boolean deleteIndex() throws IOException {
 		JestResult result = this.index.deleteIndex(this.indexConfig.getIndex());
 		return result.isSucceeded();
 	}
 	
+	public boolean addMapping() throws IOException {
+		JestResult result = this.index.addMapping(this.indexConfig.getIndex(), this.indexConfig.getDocumentType(), this.indexConfig.getMapping());
+		return result.isSucceeded();
+	}
+	
 	public boolean addPublication(Publication object, String id) throws IOException {
 		JestResult result =  this.index.addObject(this.indexConfig.getIndex(), this.indexConfig.getDocumentType(), object, id);
 		return (result.isSucceeded());
+	}
+	
+	public void addAsyncPublication(Publication object, String id) throws IOException {
+		this.index.addAsyncObject(this.indexConfig.getIndex(), this.indexConfig.getDocumentType(), object, id);
+		return;
 	}
 	
 	public Publication getPublication(String id) throws IOException {
