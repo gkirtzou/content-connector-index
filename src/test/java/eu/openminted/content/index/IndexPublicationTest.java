@@ -35,9 +35,7 @@ public class IndexPublicationTest {
 	@Autowired
 	private IndexPublication index;
 	
-	
-	
-	
+
 	private void createIndex() throws Exception {
 		
 		log.info("Creating test index " + esConfig.getIndex());
@@ -65,9 +63,9 @@ public class IndexPublicationTest {
 	public void addPublicationsToIndex() throws Exception {
 			
 		log.info("Adding objects to index");
-		String pathToPdf = "/home/gkirtzou/Desktop/tmp/pdfs/";
+		String pathToFullText = "/home/gkirtzou/Desktop/tmp/fulltext/";
 		String urlDomain = "http://adonis.athenarc.gr/pdfs/";	
-		PublicationGenerator pubGenerator = new PublicationGenerator(pathToPdf, urlDomain, 9);
+		PublicationGenerator pubGenerator = new PublicationGenerator(pathToFullText, urlDomain, 4);
 		
 		// Add publications
 		for (int i = 0; i < 10; i++) {
@@ -112,7 +110,7 @@ public class IndexPublicationTest {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void basicIndexOperations() throws Exception {
 		log.info("BASIC INDEX OPERATIONS");
 		createIndex();

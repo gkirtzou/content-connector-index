@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.apache.commons.io.FileUtils;
 
 import eu.openminted.content.index.entities.Publication;
+import eu.openminted.content.index.entities.utils.ExtensionResolver;
 import eu.openminted.omtdcache.CacheDataIDMD5;
 
 public class PublicationGenerator {
@@ -31,13 +32,19 @@ public class PublicationGenerator {
 	public Publication generatePublication() throws IOException {
 		Publication pub = new Publication();
 		int id = rand.nextInt(this.range);
+		int type = rand.nextInt(2);
 		// openaireId
 		String openaireID = Integer.toString(count++);//UUID.randomUUID().toString();
 		pub.setOpenaireId(openaireID);
 		// MimeType
-		pub.setMimeType("application/pdf");
+		if (type == 1) {
+			pub.setMimeType("application/pdf");
+		}
+		else {
+			pub.setMimeType("application/xml");
+		}		
 	    // pathToFile
-		String pathToFile = pathToFiles +  id +  ".pdf";
+		String pathToFile = pathToFiles + type +  id + ExtensionResolver.getExtension(pub.getMimeType());
 		pub.setPathToFile(pathToFile);
 		
 		// hash value
@@ -46,7 +53,7 @@ public class PublicationGenerator {
 		pub.setHashValue(hashValue);		
 		
 		// url
-		String url = urlDomain + id + ".pdf";
+		String url = urlDomain + type +  id + ExtensionResolver.getExtension(pub.getMimeType());
 		pub.setUrl(url);
 		return pub;
 	}
