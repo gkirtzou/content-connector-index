@@ -2,6 +2,10 @@ package eu.openminted.content.index.entities;
 
 import io.searchbox.annotations.JestId;
 
+/**
+ * @author gkirtzou
+ *
+ */
 public class Publication  {
 	
 	@JestId

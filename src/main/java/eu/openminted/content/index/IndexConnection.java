@@ -4,6 +4,10 @@ import io.searchbox.client.JestClient;
 import io.searchbox.client.JestClientFactory;
 import io.searchbox.client.config.HttpClientConfig;
 
+/**
+ * @author gkirtzou
+ *
+ */
 public class IndexConnection {
 	
 	private JestClient client;

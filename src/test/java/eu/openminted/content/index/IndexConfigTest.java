@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import eu.openminted.content.index.IndexConfiguration;
 import eu.openminted.content.index.IndexConnection;
 
+/**
+ * @author gkirtzou
+ *
+ */
 @Configuration
 public class IndexConfigTest {
 	

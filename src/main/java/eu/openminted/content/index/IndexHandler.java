@@ -16,7 +16,10 @@ import io.searchbox.indices.IndicesExists;
 import io.searchbox.indices.mapping.PutMapping;
 import io.searchbox.params.Parameters;
 
-
+/**
+ * @author gkirtzou
+ *
+ */
 public class IndexHandler<T> {
 	
 	private IndexConnection indexConn;
@@ -68,6 +71,7 @@ public class IndexHandler<T> {
    	   	return;
 	}	
 	
+
 	public JestResult getObject(String indexName, String documentType, String id) throws IOException {
 		Get get = new Get.Builder(indexName, id).type(documentType).build();
 		JestResult result = this.client.execute(get);
@@ -86,5 +90,8 @@ public class IndexHandler<T> {
 		return resultSearch;
 	}
 	
+	public void disconnect() {
+		this.indexConn.disconnect();
+	}
 	
 }

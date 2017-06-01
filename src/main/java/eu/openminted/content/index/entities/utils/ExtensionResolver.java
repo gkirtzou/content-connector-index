@@ -7,7 +7,8 @@ import javax.activation.MimetypesFileTypeMap;
 
 /*
  * A very basic resolver for file extension. 
- * Information about mimetype and extension :: https://www.sitepoint.com/web-foundations/mime-types-complete-list/ 
+ * Information about mimetype and extension :: https://www.sitepoint.com/web-foundations/mime-types-complete-list/
+ * @author gkirtzou 
  */
 public class ExtensionResolver {
 

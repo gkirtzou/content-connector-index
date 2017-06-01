@@ -11,6 +11,10 @@ import io.searchbox.client.JestResult;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.SearchResult.Hit;
 
+/**
+ * @author gkirtzou
+ *
+ */
 public class IndexPublication {
 
 	private IndexHandler<Publication> index;
@@ -79,7 +83,9 @@ public class IndexPublication {
 		return listPub;
 	}
 	
-	
+	public void disconnect() {
+		this.index.disconnect();
+	}
 	
 	
 }

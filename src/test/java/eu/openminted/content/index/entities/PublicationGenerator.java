@@ -11,6 +11,10 @@ import eu.openminted.content.index.entities.Publication;
 import eu.openminted.content.index.entities.utils.ExtensionResolver;
 import eu.openminted.omtdcache.CacheDataIDMD5;
 
+/**
+ * @author gkirtzou
+ *
+ */
 public class PublicationGenerator {
 	
 	private String pathToFiles;

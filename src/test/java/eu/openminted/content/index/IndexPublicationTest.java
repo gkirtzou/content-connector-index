@@ -23,6 +23,10 @@ import eu.openminted.content.index.IndexConfiguration;
 import eu.openminted.content.index.entities.Publication;
 import eu.openminted.content.index.entities.PublicationGenerator;
 
+/**
+ * @author gkirtzou
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {IndexConfigTest.class})
 public class IndexPublicationTest {

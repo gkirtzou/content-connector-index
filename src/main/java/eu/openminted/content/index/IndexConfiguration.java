@@ -3,6 +3,10 @@ package eu.openminted.content.index;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * @author gkirtzou
+ *
+ */
 public class IndexConfiguration {
 
 	private static IndexConfiguration instance = null;
