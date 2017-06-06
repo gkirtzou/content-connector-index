@@ -114,7 +114,7 @@ public class IndexPublicationTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void basicIndexOperations() throws Exception {
 		log.info("BASIC INDEX OPERATIONS");
 		createIndex();

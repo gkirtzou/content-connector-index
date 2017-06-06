@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import eu.openminted.content.index.IndexPublication;
 import eu.openminted.content.index.entities.Publication;
 
 /**
+ * Creates an index and load it with data in json format.
  * @author gkirtzou
  *
  */
@@ -36,6 +38,7 @@ public class IndexCreateAndLoadTest {
 	private IndexPublication index;
 	
 	@Test
+	@Ignore
 	public void indexCreateAndBulkLoad() throws IOException {
 		Properties configFile = new Properties();
 		configFile.load(IndexCreateAndLoadTest.class.getClassLoader().getResourceAsStream("indexCreateAndLoadTestConfig.properties"));

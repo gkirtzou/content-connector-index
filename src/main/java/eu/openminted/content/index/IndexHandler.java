@@ -61,7 +61,7 @@ public class IndexHandler<T> {
 
 	public JestResult addObject(String indexName, String documentType, T object, String id) throws IOException  {
 		Index index = new Index.Builder(object).index(indexName).type(documentType).id(id).build();
-   	   	JestResult result = client.execute(index);
+		JestResult result = client.execute(index);
    	   	return result;
 	}	
 	
