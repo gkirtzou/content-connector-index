@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import eu.openminted.content.index.entities.Publication;
 import io.searchbox.client.JestResult;
@@ -56,6 +57,10 @@ public class IndexPublication {
 		return;
 	}
 	
+	public boolean addBulkPublications(Vector<Publication> objectList) throws IOException {
+		JestResult result = this.index.addBulkObjects(this.indexConfig.getIndex(), this.indexConfig.getDocumentType(), objectList); 
+		return (result.isSucceeded());
+	}
 	public Publication getPublication(String id) throws IOException {
 		JestResult result = this.index.getObject(this.indexConfig.getIndex(), this.indexConfig.getDocumentType(), id);
 		Publication pub = result.getSourceAsObject(Publication.class);

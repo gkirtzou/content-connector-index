@@ -3,6 +3,9 @@
  */
 package eu.openminted.content.index;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.searchbox.client.JestResult;
 import io.searchbox.client.JestResultHandler;
 
@@ -11,14 +14,16 @@ import io.searchbox.client.JestResultHandler;
  *
  */
 public class MyJestResultHandler implements JestResultHandler<JestResult> {
+		
+	  private static final Logger log = LoggerFactory.getLogger(MyJestResultHandler.class);
 	  @Override
 	  public void completed(JestResult result) {
-		  System.out.println("Result completed::" + result.getJsonString());	                		    	
+		  log.info("Result completed::" + result.getJsonString());	                		    	
 	  }
 	  
 	  @Override
 	  public void failed(Exception ex) {
-		  System.out.println("Result failed::" + ex.getMessage());
+		  log.info("Result failed::" + ex.getMessage());
 	  }
 
 }

@@ -64,6 +64,7 @@ public class Publication  {
 	}
 	
 	public String getUrl() {
+
 		return url;
 	}
 

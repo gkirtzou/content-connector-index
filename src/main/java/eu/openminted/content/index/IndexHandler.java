@@ -1,11 +1,11 @@
 package eu.openminted.content.index;
 
 import java.io.IOException;
-
-
+import java.util.Vector;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
+import io.searchbox.core.Bulk;
 import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
@@ -71,7 +71,26 @@ public class IndexHandler<T> {
    	   	return;
 	}	
 	
+	public JestResult addBulkObjects(String indexName, String documentType, Vector<T> objectList) throws IOException {
+			
+		Vector<Index> actions = new Vector<Index>();
+		for (T obj : objectList) {
+			actions.add(new Index.Builder(obj).build());
+		}
+		
+		Bulk bulk = new Bulk.Builder()
+		                .defaultIndex(indexName)
+		                .defaultType(documentType)
+		                .addAction(actions).build();
+		                //.addAction(Arrays.asList(
+		                //    new Index.Builder(article1).build(),
+		                //    new Index.Builder(article2).build()))
+		                //.build();
 
+		JestResult result = client.execute(bulk);
+		return result;
+	}
+	
 	public JestResult getObject(String indexName, String documentType, String id) throws IOException {
 		Get get = new Get.Builder(indexName, id).type(documentType).build();
 		JestResult result = this.client.execute(get);

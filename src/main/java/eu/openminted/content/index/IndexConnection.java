@@ -14,8 +14,7 @@ public class IndexConnection {
 	
 	public IndexConnection() {
 		JestClientFactory factory = new JestClientFactory();
-        factory.setHttpClientConfig(new HttpClientConfig.Builder("http://localhost:9200")
-                .readTimeout(60000)
+        factory.setHttpClientConfig(new HttpClientConfig.Builder("http://localhost:9200")              
                 .multiThreaded(true)
                 .build());
         this.client = factory.getObject();
@@ -23,8 +22,7 @@ public class IndexConnection {
 	
 	public IndexConnection(String host, String port) {
 		JestClientFactory factory = new JestClientFactory();
-        factory.setHttpClientConfig(new HttpClientConfig.Builder(host+":" + port)
-                .readTimeout(60000)
+        factory.setHttpClientConfig(new HttpClientConfig.Builder(host+":" + port)              
                 .multiThreaded(true)
                 .build());
         this.client = factory.getObject();
