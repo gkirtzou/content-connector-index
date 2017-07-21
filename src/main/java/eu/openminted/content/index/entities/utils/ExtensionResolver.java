@@ -17,6 +17,10 @@ public class ExtensionResolver {
 		return ExtensionResolver.getExtension(mimeType);
 	}
 	
+	static public String getMimeType(File file) {
+		return new MimetypesFileTypeMap().getContentType(file);
+	}
+	
 	static public String getExtension(String mimeType) {
 		if (mimeType.equalsIgnoreCase("application/pdf")) {
 			return ".pdf";
@@ -30,3 +34,5 @@ public class ExtensionResolver {
 		return ".xml";
 	}
 }
+
+// application/octet-stream --> intech______::2dfcb6d7cbd798369fa46b81324051be
